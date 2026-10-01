@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments with Mentions</title>
+
+  <!-- Lexicon kit — in this order -->
+  <script>(function(){
+    var S=['light','light-hc','dark','dark-hc'];
+    function apply(){try{
+      var r=document.documentElement;
+      var s=localStorage.getItem('vanilla-skin')||'light';
+      S.forEach(function(c){r.classList.remove(c);});
+      r.classList.add(S.indexOf(s)>-1?s:'light');
+      if(localStorage.getItem('vanilla-cms-style')==='1'){
+        r.style.setProperty('--rounded-sm','4px');
+        r.style.setProperty('--rounded-md','8px');
+        r.style.setProperty('--rounded-lg','16px');
+      }else{
+        r.style.removeProperty('--rounded-sm');
+        r.style.removeProperty('--rounded-md');
+        r.style.removeProperty('--rounded-lg');
+      }
+    }catch(e){}}
+    apply();
+    window.addEventListener('pageshow',apply);
+  })()</script>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="tokens-high-contrast.css">
+  <link rel="stylesheet" href="tokens-dark.css">
+  <link rel="stylesheet" href="components.css">
+  <script src="icons.js"></script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     EDIT BELOW.
+     Comments panel with CKEditor 5 Mention (basic): type "@" in the
+     composer to open the people balloon; ↑/↓ to move, Enter/Tab to
+     insert, Esc to close. Saved comments render mentions as
+     <span class="mention" data-mention="@id">.
+     ════════════════════════════════════════════════════════════════ -->
+
+<main style="display: flex; justify-content: flex-end; height: 100vh; background: var(--color-light-l1);">
+
+  <aside class="comments-panel" aria-labelledby="comments-title">
+    <header class="comments-panel__header">
+      <h2 class="comments-panel__title" id="comments-title">Comments</h2>
+      <div class="comments-panel__actions">
+        <button type="button" class="btn btn--borderless btn--sm btn--icon" aria-label="Turn Off Notifications">
+          <svg class="lexicon-icon"><use href="#bell-off"></use></svg>
+        </button>
+        <button type="button" class="btn btn--borderless btn--sm btn--icon" aria-label="Close">
+          <svg class="lexicon-icon"><use href="#times"></use></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Composer -->
+    <form class="comment-composer" id="composer" onsubmit="return false;">
+      <div class="input">
+        <span class="input__label" id="editor-label">Add Your Comment</span>
+        <div class="input__field input__field--textarea comment-editor"
+             id="editor"
+             contenteditable="true"
+             role="textbox"
+             aria-multiline="true"
+             aria-labelledby="editor-label"
+             aria-autocomplete="list"
+             aria-controls="mention-menu"
+             data-placeholder="Type your comment here."></div>
+      </div>
+
+      <ul class="dropdown mention-menu" id="mention-menu" role="listbox" aria-label="People" hidden></ul>
+
+      <div class="comment-composer__actions">
+        <button type="button" class="btn btn--primary btn--sm" id="save-btn">Save</button>
+        <button type="button" class="btn btn--borderless btn--sm" id="cancel-btn">Cancel</button>
+      </div>
+    </form>
+
+    <!-- Thread -->
+    <div class="comment-list" id="comment-list">
+
+      <article class="comment">
+          <header class="comment__header">
+            <span class="sticker sticker--md sticker--circle sticker--icon"><svg class="lexicon-icon"><use href="#user"></use></svg></span>
+            <div class="comment__meta">
+              <span class="comment__author">Javier Ruiz</span>
+              <span class="comment__date">2 Hours Ago</span>
+            </div>
+            <button type="button" class="btn btn--borderless btn--xs btn--icon comment__menu" aria-label="Comment Actions">
+              <svg class="lexicon-icon lexicon-icon-sm"><use href="#ellipsis-v"></use></svg>
+            </button>
+          </header>
+        <p class="comment__body">The hero banner overlaps the navigation on tablets. <span class="mention" data-mention="@lfernandez">@lfernandez</span> can you check the breakpoint?</p>
+
+        <div class="comment__replies">
+          <article class="comment">
+          <header class="comment__header">
+            <span class="sticker sticker--md sticker--circle"><img src="https://picsum.photos/id/1011/64/64" alt=""></span>
+            <div class="comment__meta">
+              <span class="comment__author">Lucía Fernández</span>
+              <span class="comment__date">1 Hour Ago</span>
+            </div>
+            <button type="button" class="btn btn--borderless btn--xs btn--icon comment__menu" aria-label="Comment Actions">
+              <svg class="lexicon-icon lexicon-icon-sm"><use href="#ellipsis-v"></use></svg>
+            </button>
+          </header>
+            <p class="comment__body">On it. It's the tablet media query — <span class="mention" data-mention="@jruiz">@jruiz</span> I'll push a fix today.</p>
+            <div class="comment__actions">
+              <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Like" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-up"></use></svg><span>2</span></button>
+              <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Dislike" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-down"></use></svg><span>0</span></button>
+            </div>
+          </article>
+
+          <article class="comment">
+          <header class="comment__header">
+            <span class="sticker sticker--md sticker--circle sticker--outline sticker--warning">MB</span>
+            <div class="comment__meta">
+              <span class="comment__author">Marco Bianchi</span>
+              <span class="comment__date">45 Minutes Ago</span>
+            </div>
+            <button type="button" class="btn btn--borderless btn--xs btn--icon comment__menu" aria-label="Comment Actions">
+              <svg class="lexicon-icon lexicon-icon-sm"><use href="#ellipsis-v"></use></svg>
+            </button>
+          </header>
+            <p class="comment__body"><span class="mention mention--self" data-mention="@snavarro">@snavarro</span> heads-up: the campaign landing page uses the same banner.</p>
+            <div class="comment__actions">
+              <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Like" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-up"></use></svg><span>1</span></button>
+              <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Dislike" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-down"></use></svg><span>0</span></button>
+            </div>
+          </article>
+        </div>
+
+        <div class="comment__actions">
+          <button type="button" class="btn btn--borderless btn--xs">Reply</button>
+          <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Like" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-up"></use></svg><span>3</span></button>
+              <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Dislike" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-down"></use></svg><span>0</span></button>
+        </div>
+      </article>
+
+      <article class="comment">
+          <header class="comment__header">
+            <span class="sticker sticker--md sticker--circle"><img src="https://picsum.photos/id/1015/64/64" alt=""></span>
+            <div class="comment__meta">
+              <span class="comment__author">Hannah Weber</span>
+              <span class="comment__date">1 Day Ago</span>
+            </div>
+            <button type="button" class="btn btn--borderless btn--xs btn--icon comment__menu" aria-label="Comment Actions">
+              <svg class="lexicon-icon lexicon-icon-sm"><use href="#ellipsis-v"></use></svg>
+            </button>
+          </header>
+        <p class="comment__body">Footer copy is approved. Thanks <span class="mention" data-mention="@dkim">@dkim</span>! <span class="mention" data-mention="@web-content-editors" data-mention-type="user-group" title="14 users notified">@Web Content Editors</span> please publish it on Friday.</p>
+        <div class="comment__actions">
+          <button type="button" class="btn btn--borderless btn--xs">Reply</button>
+          <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Like" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-up"></use></svg><span>5</span></button>
+              <button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Dislike" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-down"></use></svg><span>0</span></button>
+        </div>
+      </article>
+
+    </div>
+  </aside>
+
+  <nav class="vert-bar" aria-label="Sidebar" style="height: 100%; border-radius: 0; border-top: 0; border-bottom: 0;">
+    <ul class="vert-bar__cluster">
+      <li><button type="button" class="vert-bar__btn" aria-label="Details"><svg class="lexicon-icon"><use href="#info-circle"></use></svg></button></li>
+      <li><button type="button" class="vert-bar__btn" aria-label="Schedule"><svg class="lexicon-icon"><use href="#date-time"></use></svg></button></li>
+      <li><button type="button" class="vert-bar__btn" aria-label="Categorization"><svg class="lexicon-icon"><use href="#categories"></use></svg></button></li>
+      <li><button type="button" class="vert-bar__btn is-active" aria-label="Comments" aria-current="true"><svg class="lexicon-icon"><use href="#message"></use></svg></button></li>
+    </ul>
+  </nav>
+
+</main>
+
+<script>
+(function () {
+  // Current viewer (excluded from the feed; their mentions render as .mention--self).
+  var VIEWER = { id: 'snavarro', name: 'Sofía Navarro', initials: 'SN', tone: 'primary' };
+
+  // Mention feed — in CKEditor this is `mention.feeds[0].feed`, usually an async
+  // call to the users API filtered by the typed query.
+  var USERS = [
+    { id: 'atorres',    name: 'Ana Torres',      initials: 'AT', tone: 'success' },
+    { id: 'amolina',    name: 'Andrés Molina',   initials: 'AM', tone: 'info' },
+    { id: 'dkim',       name: 'Daniel Kim',      initials: 'DK', tone: 'danger' },
+    { id: 'hweber',     name: 'Hannah Weber',    img: 'https://picsum.photos/id/1015/80/80' },
+    { id: 'jruiz',      name: 'Javier Ruiz',     initials: 'JR', tone: 'info' },
+    { id: 'lfernandez', name: 'Lucía Fernández', img: 'https://picsum.photos/id/1011/80/80' },
+    { id: 'mbianchi',   name: 'Marco Bianchi',   initials: 'MB', tone: 'warning' },
+    { id: 'ppatel',     name: 'Priya Patel',     initials: 'PP', tone: 'success' }
+  ];
+  // User groups — `canView` = members (excluding the viewer) with View permission
+  // on this asset: that's who actually gets notified. Groups with 0 are not offered.
+  var GROUPS = [
+    { id: 'web-content-editors', name: 'Web Content Editors', members: 18, canView: 14 },
+    { id: 'design-system-team',  name: 'Design System Team',  members: 6,  canView: 6 },
+    { id: 'marketing-global',    name: 'Marketing Global',    members: 42, canView: 31 },
+    { id: 'marketing-spain',     name: 'Marketing Spain',     members: 9,  canView: 9 },
+    { id: 'legal-reviewers',     name: 'Legal Reviewers',     members: 4,  canView: 0 }
+  ].map(function (g) {
+    g.type = 'group';
+    g.initials = g.name.split(' ').slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
+    return g;
+  }).filter(function (g) { return g.canView > 0; });
+
+  var USER_LIMIT = 5, GROUP_LIMIT = 3;   // dropdownLimit split across both kinds
+  var MARKER = '@';
+
+  var editor = document.getElementById('editor');
+  var menu = document.getElementById('mention-menu');
+  var composer = document.getElementById('composer');
+  var list = document.getElementById('comment-list');
+
+  var matches = [], active = 0, query = null;
+
+  function norm(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function sticker(u, size) {
+    // Groups: primary rounded square with initials, so they read differently from people.
+    if (u.type === 'group') return '<span class="sticker sticker--outline sticker--primary' + (size ? ' ' + size : '') + '">' + u.initials + '</span>';
+    var cls = 'sticker sticker--circle' + (size ? ' ' + size : '');
+    if (u.img) return '<span class="' + cls + '"><img src="' + u.img + '" alt=""></span>';
+    return '<span class="' + cls + ' sticker--outline sticker--' + u.tone + '">' + u.initials + '</span>';
+  }
+
+  function highlight(name, q) {
+    if (!q) return esc(name);
+    var i = norm(name).indexOf(norm(q));
+    if (i < 0) return esc(name);
+    return esc(name.slice(0, i)) + '<mark>' + esc(name.slice(i, i + q.length)) + '</mark>' + esc(name.slice(i + q.length));
+  }
+
+  // Text between the marker and the caret, or null if the caret isn't in a mention query.
+  function currentQuery() {
+    var sel = window.getSelection();
+    if (!sel.rangeCount || !sel.isCollapsed) return null;
+    var node = sel.anchorNode;
+    if (!node || node.nodeType !== 3 || !editor.contains(node)) return null;
+    var before = node.textContent.slice(0, sel.anchorOffset);
+    var m = before.match(/(^|\s)@([\p{L}\p{N}._-]*)$/u);
+    if (!m) return null;
+    return { node: node, end: sel.anchorOffset, start: sel.anchorOffset - m[2].length - 1, text: m[2] };
+  }
+
+  function render() {
+    menu.innerHTML = matches.map(function (u, i) {
+      return '<li><button type="button" class="dropdown__item' + (i === active ? ' is-active' : '') + '" role="option" id="mention-opt-' + i + '" aria-selected="' + (i === active) + '" data-index="' + i + '">' +
+        sticker(u, '') +
+        '<span class="mention-menu__text"><span class="mention-menu__name">' + highlight(u.name, query.text) + '</span>' +
+        '<span class="mention-menu__id">' + (u.type === 'group'
+          ? u.canView + (u.canView === 1 ? ' User Will Be Notified' : ' Users Will Be Notified')
+          : '@' + u.id) + '</span></span></button></li>';
+    }).join('');
+    editor.setAttribute('aria-activedescendant', 'mention-opt-' + active);
+  }
+
+  function position() {
+    var range = document.createRange();
+    range.setStart(query.node, query.start);
+    range.setEnd(query.node, query.start + 1);
+    var r = range.getBoundingClientRect();
+    var box = composer.getBoundingClientRect();
+    var pad = parseFloat(getComputedStyle(composer).paddingLeft);
+    var left = Math.max(pad, Math.min(r.left - box.left, box.width - pad - menu.offsetWidth));
+    menu.style.top = (r.bottom - box.top + 4) + 'px';
+    menu.style.left = left + 'px';
+  }
+
+  function update() {
+    query = currentQuery();
+    if (!query) return close();
+    var q = norm(query.text);
+    function hit(u) {
+      return !q || norm(u.name).split(' ').some(function (w) { return w.indexOf(q) === 0; }) || u.id.indexOf(q) === 0;
+    }
+    matches = USERS.filter(hit).slice(0, USER_LIMIT).concat(GROUPS.filter(hit).slice(0, GROUP_LIMIT));
+    if (!matches.length) return close();   // CKEditor hides the balloon when nothing matches
+    active = Math.min(active, matches.length - 1);
+    render();
+    menu.hidden = false;
+    editor.setAttribute('aria-expanded', 'true');
+    position();
+  }
+
+  function close() {
+    menu.hidden = true;
+    active = 0;
+    editor.setAttribute('aria-expanded', 'false');
+    editor.removeAttribute('aria-activedescendant');
+  }
+
+  function insert(u) {
+    var range = document.createRange();
+    range.setStart(query.node, query.start);
+    range.setEnd(query.node, query.end);
+    range.deleteContents();
+
+    var span = document.createElement('span');
+    span.className = 'mention';
+    span.setAttribute('data-mention', MARKER + u.id);
+    span.setAttribute('data-mention-type', u.type === 'group' ? 'user-group' : 'user');
+    span.setAttribute('contenteditable', 'false');
+    span.textContent = MARKER + (u.type === 'group' ? u.name : u.id);
+    if (u.type === 'group') span.title = u.canView + ' users notified';
+    var space = document.createTextNode(' ');
+    range.insertNode(space);
+    range.insertNode(span);
+
+    var sel = window.getSelection();
+    var after = document.createRange();
+    after.setStart(space, 1);
+    after.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(after);
+    close();
+  }
+
+  editor.addEventListener('input', function () { active = 0; update(); });
+  editor.addEventListener('click', update);
+  editor.addEventListener('blur', function () { setTimeout(close, 120); });
+
+  editor.addEventListener('keydown', function (e) {
+    if (menu.hidden) return;
+    if (e.key === 'ArrowDown') { active = (active + 1) % matches.length; render(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { active = (active - 1 + matches.length) % matches.length; render(); e.preventDefault(); }
+    else if (e.key === 'Enter' || e.key === 'Tab') { insert(matches[active]); e.preventDefault(); }
+    else if (e.key === 'Escape') { close(); e.preventDefault(); }
+  });
+
+  // mousedown keeps the caret inside the editor while picking.
+  menu.addEventListener('mousedown', function (e) {
+    var btn = e.target.closest('[data-index]');
+    if (!btn) return;
+    e.preventDefault();
+    insert(matches[+btn.getAttribute('data-index')]);
+  });
+  menu.addEventListener('mousemove', function (e) {
+    var btn = e.target.closest('[data-index]');
+    if (btn && +btn.dataset.index !== active) { active = +btn.dataset.index; render(); }
+  });
+
+  // Save — what the backend would receive: HTML with data-mention markers to notify.
+  document.getElementById('save-btn').addEventListener('click', function () {
+    if (!editor.textContent.trim()) { editor.focus(); return; }
+    var body = editor.cloneNode(true);
+    body.querySelectorAll('.mention').forEach(function (m) {
+      m.removeAttribute('contenteditable');
+      if (m.getAttribute('data-mention') === MARKER + VIEWER.id) m.classList.add('mention--self');
+    });
+    var art = document.createElement('article');
+    art.className = 'comment is-new';
+    art.innerHTML =
+      '<header class="comment__header">' + sticker(VIEWER, 'sticker--md') +
+        '<div class="comment__meta"><span class="comment__author">' + VIEWER.name + '</span><span class="comment__date">Just Now</span></div>' +
+        '<button type="button" class="btn btn--borderless btn--xs btn--icon comment__menu" aria-label="Comment Actions"><svg class="lexicon-icon lexicon-icon-sm"><use href="#ellipsis-v"></use></svg></button>' +
+      '</header>' +
+      '<p class="comment__body">' + body.innerHTML + '</p>' +
+      '<div class="comment__actions"><button type="button" class="btn btn--borderless btn--xs">Reply</button>' +
+        '<button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Like" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-up"></use></svg><span>0</span></button>' +
+        '<button type="button" class="btn btn--borderless btn--xs js-vote" aria-label="Dislike" aria-pressed="false"><svg class="lexicon-icon lexicon-icon-sm"><use href="#thumbs-down"></use></svg><span>0</span></button></div>';
+    list.insertBefore(art, list.firstChild);
+    editor.innerHTML = '';
+    close();
+  });
+
+  document.getElementById('cancel-btn').addEventListener('click', function () { editor.innerHTML = ''; close(); });
+
+  // Like / dislike toggles.
+  list.addEventListener('click', function (e) {
+    var btn = e.target.closest('.js-vote');
+    if (!btn) return;
+    var on = btn.getAttribute('aria-pressed') !== 'true';
+    var count = btn.querySelector('span');
+    count.textContent = +count.textContent + (on ? 1 : -1);
+    btn.setAttribute('aria-pressed', on);
+    btn.querySelector('use').setAttribute('href', on ? (btn.getAttribute('aria-label') === 'Like' ? '#thumbs-up-full' : '#thumbs-down-full') : (btn.getAttribute('aria-label') === 'Like' ? '#thumbs-up' : '#thumbs-down'));
+  });
+
+  // Initial demo state: a draft mid-mention with the balloon open.
+  editor.textContent = 'Can someone review the new banner? @m';
+  editor.focus();
+  var sel = window.getSelection(), r = document.createRange();
+  r.setStart(editor.firstChild, editor.firstChild.length);
+  r.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(r);
+  update();
+})();
+</script>
+
+</body>
+</html>
